@@ -81,9 +81,6 @@ if perc_stock_difference > 1:
 #TODO 6. - Instead of printing ("Get News"), use the News API to get articles related to the COMPANY_NAME.
 
 
-
-
-
 # https://newsapi.org/v2/everything?q=tesla&from=2021-03-23&sortBy=publishedAt&apiKey=API_KEY
 
 #TODO 7. - Use Python slice operator to create a list that contains the first 3 articles. Hint: https://stackoverflow.com/questions/509211/understanding-slice-notation
@@ -122,7 +119,7 @@ for article in sms_list:
     client = Client(TWILIO_account_sid, TWILIO_auth_token)
     message = client.messages \
         .create(
-        body=f"{STOCK_NAME}:🔺{perc_stock_difference}%\nHeadline: {article_title}\nBrief: {article_description}",
+        body=f"{STOCK_NAME}:{symbol}{perc_stock_difference}%\nHeadline: {article_title}\nBrief: {article_description}",
         from_="+18602003804",
         to="+32486226706"
     )
