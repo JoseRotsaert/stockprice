@@ -29,12 +29,7 @@ stock_parameters = {
     "apikey": ALPHAVANTAGE_API_KEY,
 }
 
-news_parameters = {
-    "q": "Tesla",
-    "from": yesterday,
-    "sortBy": "published",
-    "apiKey": NEWS_API_KEY,
-}
+
 
     ## STEP 1: Use https://www.alphavantage.co/documentation/#daily
 # When stock price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").
@@ -69,25 +64,31 @@ print(perc_stock_difference)
 #TODO 5. - If TODO4 percentage is greater than 5 then print("Get News").
 
 if perc_stock_difference > 1:
-    print("Get News")
-
+    news_parameters = {
+        "qInTitle": COMPANY_NAME,
+        "from": yesterday,
+        "sortBy": "published",
+        "apiKey": NEWS_API_KEY,
+    }
+    news_response = requests.get(url=NEWS_ENDPOINT, params=news_parameters)
+    news_response.raise_for_status()
+    news_data = news_response.json()["articles"][0:3]
+    print(news_data)
+    print(type(news_data))
     ## STEP 2: https://newsapi.org/ 
     # Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME. 
 
 #TODO 6. - Instead of printing ("Get News"), use the News API to get articles related to the COMPANY_NAME.
 
 
-news_response = requests.get(url=NEWS_ENDPOINT, params=news_parameters)
-news_response.raise_for_status()
+
 
 
 # https://newsapi.org/v2/everything?q=tesla&from=2021-03-23&sortBy=publishedAt&apiKey=API_KEY
 
 #TODO 7. - Use Python slice operator to create a list that contains the first 3 articles. Hint: https://stackoverflow.com/questions/509211/understanding-slice-notation
 
-news_data = news_response.json()["articles"][0:3]
-print(news_data)
-print(type(news_data))
+
 
     ## STEP 3: Use twilio.com/docs/sms/quickstart/python
     #to send a separate message with each article's title and description to your phone number. 
